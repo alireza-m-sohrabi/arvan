@@ -1,0 +1,11 @@
+.loading-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  left: 0;
+  height: 3px;
+
+  .progress {
+    height: 0.25rem;
+  }
+}
