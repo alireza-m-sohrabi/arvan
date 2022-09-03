@@ -1,1 +1,48 @@
-<p>login works!</p>
+<div class="login-wrapper bg-secondary">
+  <form [formGroup]="form" (submit)="onSubmit()">
+    <div class="login-container">
+      <div class="login-title">Login</div>
+      <div class="login-content">
+        <arvan-form-field [control]="form.controls['email']">
+          <arvan-label for="loginEmail">Email</arvan-label>
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control"
+            id="loginEmail"
+            placeholder="Enter email"
+          />
+        </arvan-form-field>
+        <arvan-form-field [control]="form.controls['password']">
+          <arvan-label for="loginPassword">Password</arvan-label>
+          <input
+            formControlName="password"
+            type="password"
+            class="form-control"
+            id="loginPassword"
+            placeholder="Password"
+          />
+        </arvan-form-field>
+      </div>
+
+      <div class="login-aciton">
+        <button
+          *arvanButtonLoading="waiting$ | async"
+          type="submit"
+          class="btn btn-primary w-100"
+          btnCheckbox
+          btnCheckboxTrue="1"
+          btnCheckboxFalse="0"
+        >
+          Login
+        </button>
+        <div class="mt-3">
+          Don't have account?
+          <a routerLink="/access/register" class="go-to-register">
+            <b>Register Now</b>
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./bootstrap.scss";
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-size: 16px;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: $danger;
+}

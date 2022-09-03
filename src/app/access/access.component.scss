@@ -1,0 +1,35 @@
+.access-wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host ::ng-deep {
+  .register-wrapper,
+  .login-wrapper {
+    max-width: 32rem;
+    width: 100%;
+    padding: 2.5rem 1.5rem 1.5rem;
+    margin: 0 auto;
+  }
+
+  .register-title,
+  .login-title {
+    font-size: 3rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  .go-to-login,
+  .go-to-register {
+    opacity: 0.9;
+    color: #373a3c;
+    text-decoration: none;
+  }
+
+  .go-to-login:hover,
+  .go-to-register:hover {
+    opacity: 1;
+  }
+}

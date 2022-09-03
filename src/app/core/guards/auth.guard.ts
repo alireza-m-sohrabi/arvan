@@ -6,20 +6,33 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { catchError, map, Observable, of, skip, tap, throwError } from 'rxjs';
+import {
+  catchError,
+  filter,
+  map,
+  Observable,
+  of,
+  skip,
+  switchMap,
+  take,
+  tap,
+  throwError,
+} from 'rxjs';
 import { UserService } from '../user/user.service';
 import * as fromRootReducers from 'arvan/state/reducers';
 import * as fromRootSelectors from 'arvan/state/selectors';
 import * as fromRootActions from 'arvan/state/actions';
 import { UnauthorizedUtilService } from '../unauthorized-util.service';
+import { ConfigService } from 'arvan/config-provider.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
   constructor(
+    private configService: ConfigService,
     private userService: UserService,
-    private appSate: Store<fromRootReducers.AppState>,
+    private appStore: Store<fromRootReducers.AppState>,
     private unauthorizedUtilService: UnauthorizedUtilService
   ) {}
 
@@ -31,33 +44,46 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    this.appSate.dispatch(fromRootActions.getCurrentUser());
-
     return new Promise((resolve) => {
-      const token = this.userService.token;
+      this.configService.isInit
+        .pipe(
+          filter((value) => !!value),
+          switchMap(() =>
+            this.appStore.select(fromRootSelectors.selectIsAuthenticated).pipe(
+              tap((isAuthenticated) => {
+                const token = this.userService.user?.token;
 
-      if (token) {
-        this.appSate
-          .select(fromRootSelectors.getCurrentUser)
-          .pipe(
-            skip(1),
-            tap((user) => {
-              resolve(!!user);
-            }),
-            catchError((error) => {
-              this.unauthorizedUtilService.redirectToLogin();
+                if (isAuthenticated && token) {
+                  resolve(true);
 
-              resolve(false);
+                  return;
+                }
 
-              return throwError(() => error);
-            })
+                if (!isAuthenticated && token) {
+                  this.appStore.dispatch(fromRootActions.loginWithToken());
+
+                  this.appStore
+                    .select(fromRootSelectors.selectCurrentUser)
+                    .pipe(
+                      catchError((error) => {
+                        this.unauthorizedUtilService.redirectToLogin();
+
+                        resolve(false);
+
+                        return throwError(() => error);
+                      })
+                    )
+                    .subscribe();
+                } else {
+                  this.unauthorizedUtilService.redirectToLogin();
+
+                  resolve(false);
+                }
+              })
+            )
           )
-          .subscribe();
-      } else {
-        this.unauthorizedUtilService.redirectToLogin();
-
-        resolve(false);
-      }
+        )
+        .subscribe();
     });
   }
 }

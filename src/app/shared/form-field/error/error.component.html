@@ -1,0 +1,7 @@
+<div class="arvan-error-container" *ngFor="let item of errors | keyvalue">
+  <span [ngSwitch]="item.key">
+    <span class="text-danger" *ngSwitchCase="'required'"> Required field </span>
+    <span class="text-danger" *ngSwitchCase="'email'"> Invalid email </span>
+    <span class="text-danger" *ngSwitchDefault> </span>
+  </span>
+</div>

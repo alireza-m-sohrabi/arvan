@@ -9,18 +9,22 @@ import { authInterceptorProvider } from './interceptors/auth.interceptor';
 import { UserService } from './user/user.service';
 import { AuthGuard } from './guards/auth.guard';
 import { UnauthorizedUtilService } from './unauthorized-util.service';
+import { globalErrorHandlerProvider } from './error/global-error-handler';
+import { ErrorService } from './error/error.service';
 
 @NgModule({
   declarations: [LoadingComponent],
   imports: [SharedModule, HttpClientModule],
   providers: [
-    authInterceptorProvider,
+    ErrorService,
     AuthGuard,
     UserService,
     AuthService,
     LoadingService,
     CookieService,
     UnauthorizedUtilService,
+    authInterceptorProvider,
+    globalErrorHandlerProvider,
   ],
   exports: [LoadingComponent],
 })

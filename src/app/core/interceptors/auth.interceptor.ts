@@ -24,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const headers: any = { 'Content-Type': 'application/json' };
-    const token = this.userService.token;
+    const token = this.userService.user?.token;
 
     if (token) {
       headers['Authorization'] = `Token ${token}`;
