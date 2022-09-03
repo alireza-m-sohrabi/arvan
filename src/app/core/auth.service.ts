@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from 'arvan/config-provider.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { User } from './user/user';
 
 @Injectable({
@@ -17,18 +17,22 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<User> {
-    return this.httpClient.post<User>(`${this.authEndPoint}/login`, {
-      user: {
-        email,
-        password,
-      },
-    });
+    return this.httpClient
+      .post<any>(`${this.authEndPoint}/login`, {
+        user: {
+          email,
+          password,
+        },
+      })
+      .pipe(map((result) => result.user));
   }
 
   register(user: User) {
-    return this.httpClient.post<User>(`${this.authEndPoint}`, {
-      user,
-    });
+    return this.httpClient
+      .post<any>(`${this.authEndPoint}`, {
+        user,
+      })
+      .pipe(map((result) => result.user));
   }
 
   updateUser(user: User): Observable<User> {
@@ -38,6 +42,8 @@ export class AuthService {
   }
 
   getCurrentUser(): Observable<User> {
-    return this.httpClient.get<User>(`${this.userEndPoint}`);
+    return this.httpClient
+      .get<any>(`${this.userEndPoint}`)
+      .pipe(map((result) => result.user));
   }
 }

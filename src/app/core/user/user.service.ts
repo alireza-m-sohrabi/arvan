@@ -8,35 +8,19 @@ import { User } from './user';
 export class UserService {
   constructor(private cookieService: CookieService) {}
 
-  get user(): User {
-    const user = JSON.parse(this.cookieService.get('user')) as User;
-
-    return user;
+  get user(): User | undefined {
+    try {
+      return JSON.parse(this.cookieService.get('arvanUser')) as User;
+    } catch (error) {
+      return undefined;
+    }
   }
 
   set user(value: User | undefined) {
     if (value) {
-      this.cookieService.set('user', JSON.stringify(value), {
-        expires: Number.MAX_VALUE,
-        domain: '/',
-      });
+      this.cookieService.set('arvanUser', JSON.stringify(value));
     } else {
-      this.cookieService.deleteAll('token', '/');
-    }
-  }
-
-  get token() {
-    return this.cookieService.get('token');
-  }
-
-  set token(value: string | undefined) {
-    if (value) {
-      this.cookieService.set('token', value, {
-        expires: Number.MAX_VALUE,
-        domain: '/',
-      });
-    } else {
-      this.cookieService.deleteAll('token', '/');
+      this.cookieService.deleteAll('arvanUser');
     }
   }
 }

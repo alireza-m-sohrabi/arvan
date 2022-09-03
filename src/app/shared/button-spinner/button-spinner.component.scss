@@ -1,0 +1,18 @@
+:host {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+}
+
+button.loading :host {
+  background-color: inherit;
+}
+
+:host,
+.button-spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

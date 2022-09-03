@@ -1,4 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import * as fromRoot from 'arvan/state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'arvan-register',
@@ -7,7 +11,34 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent implements OnInit {
-  constructor() {}
+  form: FormGroup;
 
-  ngOnInit(): void {}
+  waiting$!: Observable<boolean | undefined>;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private appStore: Store<fromRoot.AppState>
+  ) {
+    this.form = this.generateForm();
+  }
+
+  ngOnInit(): void {
+    this.waiting$ = this.appStore.select(fromRoot.selectAuthWaiting);
+  }
+
+  generateForm() {
+    return this.formBuilder.group({
+      username: [undefined, Validators.required],
+      email: [undefined, [Validators.required, Validators.email]],
+      password: [undefined, Validators.required],
+    });
+  }
+
+  onSubmit() {
+    if (this.form.invalid) {
+      return;
+    }
+
+    this.appStore.dispatch(fromRoot.registerUser(this.form.value));
+  }
 }
