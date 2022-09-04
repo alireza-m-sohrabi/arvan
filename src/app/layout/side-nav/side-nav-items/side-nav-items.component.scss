@@ -1,0 +1,19 @@
+.menu-items {
+  height: 3.1rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.menu-item {
+  line-height: 1.1rem;
+  padding: 1rem 0rem 1rem 2rem;
+  transition: all 250ms;
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.menu-active {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}

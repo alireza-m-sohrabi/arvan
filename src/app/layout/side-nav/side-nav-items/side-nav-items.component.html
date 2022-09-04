@@ -1,0 +1,9 @@
+<div class="menu-items" *ngFor="let menu of menuItems">
+  <div
+    [routerLink]="menu.path"
+    routerLinkActive="menu-active"
+    class="menu-item text-white"
+  >
+    {{ menu.name }}
+  </div>
+</div>

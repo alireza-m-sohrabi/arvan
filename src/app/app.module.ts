@@ -11,6 +11,7 @@ import {
   appInitializerProvider,
   AppInitializerService,
 } from './app-initializer.service';
+import { LayoutModule } from './layout/layout.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import {
     AppRoutingModule,
     CoreModule,
     AppStateModule,
+    LayoutModule,
     ToastrModule.forRoot(),
   ],
   providers: [ConfigService, AppInitializerService, appInitializerProvider],
