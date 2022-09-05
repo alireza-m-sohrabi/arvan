@@ -13,17 +13,13 @@ export class ErrorService {
   handleError(response: HttpErrorResponse) {
     let errorMessage = response.error?.message;
 
-    console.error(errorMessage);
+    const errorModel = response.error?.errors || response.error?.error?.errors;
 
-    if (!!response.error?.error?.errors) {
+    if (!!errorModel) {
       errorMessage = '';
 
-      const errorModel = response.error.error as ArvanError;
-
-      if (errorModel) {
-        for (let key in errorModel.errors) {
-          errorMessage += '\n' + key + ' ' + errorModel.errors[key];
-        }
+      for (let key in errorModel) {
+        errorMessage += '\n' + key + ' ' + errorModel[key];
       }
     }
 

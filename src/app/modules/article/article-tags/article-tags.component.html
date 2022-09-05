@@ -1,0 +1,30 @@
+<form [formGroup]="form">
+  <arvan-form-field>
+    <arvan-label>Tags</arvan-label>
+    <input
+      (keydown)="$event.key === 'Enter' ? onEnter() : null"
+      type="text"
+      formControlName="title"
+      class="form-control"
+      placeholder="New tag"
+    />
+  </arvan-form-field>
+
+  <ul class="list-group" formArrayName="tags">
+    <li
+      *ngFor="let tag of tags$ | async; let i = index"
+      class="list-group-item"
+    >
+      <div [formGroupName]="i" class="form-check">
+        <input
+          formControlName="checked"
+          [checked]="tag.checked"
+          type="checkbox"
+          class="form-check-input"
+          [id]="tag + i"
+        />
+        <label class="form-check-label" [for]="tag + i">{{ tag.title }}</label>
+      </div>
+    </li>
+  </ul>
+</form>

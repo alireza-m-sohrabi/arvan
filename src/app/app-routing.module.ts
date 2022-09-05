@@ -13,7 +13,16 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     canActivate: [AuthGuard],
-    children: [],
+    children: [
+      { path: '', redirectTo: 'articles', pathMatch: 'full' },
+      {
+        path: 'articles',
+        loadChildren: () =>
+          import('./modules/article/article.module').then(
+            (m) => m.ArticleModule
+          ),
+      },
+    ],
   },
 ];
 

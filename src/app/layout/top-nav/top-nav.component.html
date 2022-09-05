@@ -1,10 +1,22 @@
 <div
   class="top-nav-container bg-dark text-white d-flex justify-center align-items-center"
 >
-  <div class="d-flex">
+  <div class="d-flex justify-content-between w-100">
     <div>
       <span class="challenge ml-3">Arvan Challenge</span>
       <span class="ml-3">welcome {{ username$ | async }}</span>
+    </div>
+    <div class="mr-1">
+      <button
+        (click)="logout()"
+        type="button"
+        class="btn btn-info w-100"
+        btnCheckbox
+        btnCheckboxTrue="1"
+        btnCheckboxFalse="0"
+      >
+        Logout
+      </button>
     </div>
   </div>
 </div>

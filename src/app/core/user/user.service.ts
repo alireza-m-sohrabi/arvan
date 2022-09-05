@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
 import { User } from './user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private cookieService: CookieService) {}
+  constructor() {}
 
   get user(): User | undefined {
     try {
-      return JSON.parse(this.cookieService.get('arvanUser')) as User;
+      return JSON.parse(sessionStorage.getItem('arvanUser')!) as User;
     } catch (error) {
       return undefined;
     }
@@ -18,9 +17,9 @@ export class UserService {
 
   set user(value: User | undefined) {
     if (value) {
-      this.cookieService.set('arvanUser', JSON.stringify(value));
+      sessionStorage.setItem('arvanUser', JSON.stringify(value));
     } else {
-      this.cookieService.deleteAll('arvanUser');
+      sessionStorage.removeItem('arvanUser');
     }
   }
 }

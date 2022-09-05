@@ -1,8 +1,10 @@
-<div class="menu-items" *ngFor="let menu of menuItems">
+<div class="menu-items">
   <div
+    *ngFor="let menu of menuItems"
     [routerLink]="menu.path"
     routerLinkActive="menu-active"
-    class="menu-item text-white"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="menu-item text-white mb-1"
   >
     {{ menu.name }}
   </div>

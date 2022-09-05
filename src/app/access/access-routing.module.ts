@@ -8,9 +8,10 @@ import { RegisterComponent } from './register/register.component';
 const routes: Routes = [
   {
     path: '',
+    canActivate: [LoginGuard],
     component: AccessComponent,
     children: [
-      { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+      { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
     ],
   },

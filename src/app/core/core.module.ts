@@ -11,9 +11,11 @@ import { AuthGuard } from './guards/auth.guard';
 import { UnauthorizedUtilService } from './unauthorized-util.service';
 import { globalErrorHandlerProvider } from './error/global-error-handler';
 import { ErrorService } from './error/error.service';
+import { ConfirmationDialogService } from './confirmation/confirmation-dialog.service';
+import { ConfirmationDialogComponent } from './confirmation/confirmation-dialog.component';
 
 @NgModule({
-  declarations: [LoadingComponent],
+  declarations: [LoadingComponent, ConfirmationDialogComponent],
   imports: [SharedModule, HttpClientModule],
   providers: [
     ErrorService,
@@ -25,6 +27,7 @@ import { ErrorService } from './error/error.service';
     UnauthorizedUtilService,
     authInterceptorProvider,
     globalErrorHandlerProvider,
+    ConfirmationDialogService,
   ],
   exports: [LoadingComponent],
 })

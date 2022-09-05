@@ -26,7 +26,6 @@
     "@ngrx/store": "^14.3.0",
     "bootstrap": "^4.6.2",
     "ngx-bootstrap": "^9.0.0",
-    "ngx-cookie-service": "^14.0.1",
     "ngx-toastr": "^15.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

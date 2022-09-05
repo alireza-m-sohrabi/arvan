@@ -21,16 +21,9 @@ export const loginUserFail = createAction(
   props<ErrorProps<any>>()
 );
 
-export const loginWithToken = createAction(`${prefix} Login With Token`);
-
-export const getCurrentUserSuccess = createAction(
-  `${prefix} Get Current User Success`,
+export const setCurrentUser = createAction(
+  `${prefix} Set Current User`,
   props<User>()
-);
-
-export const getCurrentUserFail = createAction(
-  `${prefix} Get Current User Fail`,
-  props<ErrorProps<any>>()
 );
 
 export const logoutUser = createAction(`${prefix} Logout`);

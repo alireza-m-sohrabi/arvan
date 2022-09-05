@@ -33,21 +33,17 @@ export const authReducer = createReducer(
     error,
     waiting: false,
   })),
-  on(AuthActions.logoutUser, () => ({
+  on(AuthActions.logoutUser, (state) => ({
+    ...state,
     isAuthenticated: false,
     user: undefined,
     error: undefined,
   })),
-  on(AuthActions.getCurrentUserSuccess, (state, user) => ({
+  on(AuthActions.setCurrentUser, (state, user) => ({
     ...state,
     user,
     isAuthenticated: true,
     error: undefined,
-  })),
-  on(AuthActions.getCurrentUserFail, (state, error) => ({
-    user: undefined,
-    isAuthenticated: false,
-    error,
   })),
   on(AuthActions.registerUser, (state) => ({
     ...state,

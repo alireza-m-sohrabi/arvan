@@ -1,0 +1,57 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th *ngFor="let column of displayedColumns | keyvalue" scope="col">
+        {{ column.value }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let article of articles$ | async; let i = index">
+      <th scope="row">{{ i + 1 }}</th>
+      <td *ngFor="let column of displayedColumns | keyvalue">
+        {{ article[column.key] }}
+      </td>
+
+      <td>
+        <div class="btn-group" dropdown>
+          <button
+            id="button-basic"
+            dropdownToggle
+            type="button"
+            class="btn btn-info dropdown-toggle"
+            aria-controls="dropdown-basic"
+          >
+            ... <span class="caret"></span>
+          </button>
+          <ul
+            id="dropdown-basic"
+            *dropdownMenu
+            class="dropdown-menu"
+            role="menu"
+            aria-labelledby="button-basic"
+          >
+            <li role="menuitem">
+              <a
+                (click)="$event.preventDefault(); onEdit(article)"
+                class="dropdown-item"
+                href="#"
+                >Edit</a
+              >
+            </li>
+            <li role="menuitem">
+              <a
+                (click)="$event.preventDefault(); onDelete(article)"
+                class="dropdown-item"
+                href="#"
+                >Delete</a
+              >
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<arvan-pagination [page]="pagination$ | async"></arvan-pagination>
