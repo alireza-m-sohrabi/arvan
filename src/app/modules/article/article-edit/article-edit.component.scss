@@ -1,0 +1,21 @@
+.article-form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.article-info {
+  margin-right: 1rem;
+  flex: 1 1 auto;
+
+  textarea {
+    height: 15rem;
+  }
+}
+
+.article-tags {
+  flex: 0 0 16rem;
+}
+
+.article-submit {
+  width: 7rem;
+}

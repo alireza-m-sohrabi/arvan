@@ -3,10 +3,12 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from 'arvan/core/auth.service';
 import { LoadingService } from 'arvan/core/loading/loading.service';
+import { UnauthorizedUtilService } from 'arvan/core/unauthorized-util.service';
 import { User } from 'arvan/core/user/user';
 import { UserService } from 'arvan/core/user/user.service';
 import {
   catchError,
+  EMPTY,
   finalize,
   map,
   of,
@@ -27,7 +29,7 @@ export class AuthEffects {
           map((user) => {
             this.setUser(user);
 
-            this.navigateToMainRout();
+            this.navigateToMainRoute();
 
             return AuthActions.loginUserSuccess(user);
           }),
@@ -42,33 +44,28 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActions.logoutUser),
-        tap(() => {
+        map(() => {
           this.setUser(undefined);
 
-          this.navigateToLogin();
+          this.unauthorizedUtilService.redirectToLogin();
+
+          return EMPTY;
         })
       ),
     { dispatch: false }
   );
 
-  loginWithToken$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.loginWithToken),
-      switchMap(() =>
-        this.authService.getCurrentUser().pipe(
-          map((user) => {
-            this.setUser(user);
+  setCurrentUser$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.setCurrentUser),
+        map((user) => {
+          this.setUser(user);
 
-            return AuthActions.getCurrentUserSuccess(user);
-          }),
-          catchError((error) => {
-            this.setUser(undefined);
-
-            return of(AuthActions.getCurrentUserFail(error));
-          })
-        )
-      )
-    )
+          return EMPTY;
+        })
+      ),
+    { dispatch: false }
   );
 
   registerUser$ = createEffect(() =>
@@ -80,7 +77,7 @@ export class AuthEffects {
           map((user) => {
             this.setUser(user);
 
-            this.navigateToMainRout();
+            this.navigateToMainRoute();
 
             return AuthActions.registerUserSuccess(user);
           }),
@@ -98,11 +95,7 @@ export class AuthEffects {
   throwErrors$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(
-          AuthActions.loginUserFail,
-          AuthActions.registerUserFail,
-          AuthActions.getCurrentUserFail
-        ),
+        ofType(AuthActions.loginUserFail, AuthActions.registerUserFail),
         switchMap((err) => throwError(() => err))
       ),
     { dispatch: false }
@@ -113,7 +106,8 @@ export class AuthEffects {
     private authService: AuthService,
     private loadingService: LoadingService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private unauthorizedUtilService: UnauthorizedUtilService
   ) {}
 
   private setUser(user: User | undefined) {
@@ -124,19 +118,7 @@ export class AuthEffects {
     }
   }
 
-  private navigateToMainRout() {
-    const searchParams = new URLSearchParams(window.location.search);
-    const returnTo = searchParams.get('returnTo');
-    let navigation = returnTo ? [returnTo] : [''];
-
-    this.router.navigate(navigation);
-  }
-
-  private navigateToLogin() {
-    const returnTo = window.location.pathname + window.location.search;
-
-    this.router.navigate(['access', 'login'], {
-      queryParams: { returnTo },
-    });
+  private navigateToMainRoute() {
+    this.router.navigate(['']);
   }
 }

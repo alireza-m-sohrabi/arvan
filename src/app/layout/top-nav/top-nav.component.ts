@@ -19,4 +19,8 @@ export class TopNavComponent implements OnInit {
       .select(fromRoot.selectCurrentUser)
       .pipe(map((user) => user?.username || ''));
   }
+
+  logout() {
+    this.appStore.dispatch(fromRoot.logoutUser());
+  }
 }

@@ -7,7 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { map, Observable } from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
 import { LabelComponent } from './label/label.component';
 
 @Component({
@@ -33,18 +33,22 @@ export class FormFieldComponent implements OnInit {
   }
 
   connectFormStatus() {
-    return this.control!.statusChanges.pipe(
-      map((status) => {
-        if (status === 'INVALID') {
-          this.label?.nativeElement.classList.add('text-danger');
+    if (this.control) {
+      return this.control!.statusChanges.pipe(
+        map((status) => {
+          if (status === 'INVALID') {
+            this.label?.nativeElement.classList.add('text-danger');
 
-          return this.control!.errors;
-        } else {
-          this.label?.nativeElement.classList.remove('text-danger');
-        }
+            return this.control!.errors;
+          } else {
+            this.label?.nativeElement.classList.remove('text-danger');
+          }
 
-        return [];
-      })
-    );
+          return [];
+        })
+      );
+    }
+
+    return undefined;
   }
 }

@@ -6,12 +6,6 @@ export class UnauthorizedUtilService {
   constructor(private router: Router) {}
 
   redirectToLogin() {
-    const currentLocation = window.location.pathname + window.location.search;
-
-    this.router.navigate(['/access/login'], {
-      queryParams: {
-        returnTo: currentLocation,
-      },
-    });
+    this.router.navigate(['/access/login']);
   }
 }

@@ -7,6 +7,7 @@
 .layout-main {
   padding-top: 60px;
   display: flex;
+  height: 100%;
 
   arvan-side-nav {
     flex: 0 0 250px;
@@ -14,5 +15,6 @@
 
   arvan-content {
     flex: 1 1 auto;
+    overflow-y: auto;
   }
 }

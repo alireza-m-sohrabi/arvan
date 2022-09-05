@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandler, Injectable } from '@angular/core';
 import { ErrorService } from './error.service';
 
@@ -6,7 +7,11 @@ export class GlobalErrorHandler implements ErrorHandler {
   constructor(private errorService: ErrorService) {}
 
   handleError(error: any): void {
-    this.errorService.handleError(error);
+    if (error.name === 'HttpErrorResponse') {
+      this.errorService.handleError(error);
+    } else {
+      console.error({ error });
+    }
   }
 }
 

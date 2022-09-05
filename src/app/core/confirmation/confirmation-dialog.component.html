@@ -1,0 +1,33 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{ confirmationService.title }}</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="confirmationService.close(false)"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">{{ confirmationService.message }}</div>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      (click)="confirmationService.close(false)"
+      class="btn btn-secondary"
+    >
+      No
+    </button>
+    <button
+      type="button"
+      (click)="confirmationService.close(true)"
+      class="btn btn-danger"
+      data-dismiss="modal"
+    >
+      Yes
+    </button>
+  </div>
+</div>

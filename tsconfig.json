@@ -22,7 +22,8 @@
     "paths": {
       "env/*": ["environments/*"],
       "arvan/*": ["app/*"],
-      "shared/*": ["app/shared/*"]
+      "shared/*": ["app/shared/*"],
+      "article/*": ["app/modules/article/*"]
     }
   },
   "angularCompilerOptions": {

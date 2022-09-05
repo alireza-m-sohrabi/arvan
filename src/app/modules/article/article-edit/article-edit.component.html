@@ -1,0 +1,52 @@
+<form [formGroup]="form" (submit)="onSubmit()">
+  <div class="article-form">
+    <div class="article-info">
+      <arvan-form-field [control]="form.controls['title']">
+        <arvan-label for="articleTitle">Title</arvan-label>
+        <input
+          type="text"
+          formControlName="title"
+          class="form-control"
+          id="articleTitle"
+          placeholder="Enter title"
+        />
+      </arvan-form-field>
+
+      <arvan-form-field [control]="form.controls['description']">
+        <arvan-label for="articleDescription">Description</arvan-label>
+        <input
+          type="text"
+          formControlName="description"
+          class="form-control"
+          id="articleDescription"
+          placeholder="Enter description"
+        />
+      </arvan-form-field>
+
+      <arvan-form-field [control]="form.controls['body']">
+        <arvan-label for="articleBody">Body</arvan-label>
+        <textarea
+          type="text"
+          formControlName="body"
+          class="form-control"
+          id="articleBody"
+          placeholder="Enter body"
+        ></textarea>
+      </arvan-form-field>
+    </div>
+    <div class="article-tags">
+      <arvan-article-tags></arvan-article-tags>
+    </div>
+  </div>
+
+  <button
+    *arvanButtonLoading="saving$ | async"
+    type="submit"
+    class="btn btn-primary article-submit"
+    btnCheckbox
+    btnCheckboxTrue="1"
+    btnCheckboxFalse="0"
+  >
+    Submit
+  </button>
+</form>
