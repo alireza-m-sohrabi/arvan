@@ -51,6 +51,8 @@ export class ArticleEditComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
 
+      this.form.updateValueAndValidity();
+
       return;
     }
 
@@ -102,8 +104,8 @@ export class ArticleEditComponent implements OnInit, OnDestroy {
   private generateForm() {
     return this.formBuilder.group({
       title: [undefined, Validators.required],
-      description: [undefined],
-      body: [undefined],
+      description: [undefined, Validators.required],
+      body: [undefined, Validators.required],
     });
   }
 }

@@ -11,7 +11,8 @@ import {
   filter,
   map,
   Observable,
-  tap,
+  of,
+  switchMap,
   throwError,
   withLatestFrom,
 } from 'rxjs';
@@ -42,19 +43,18 @@ export class AuthGuard implements CanActivate {
     return this.configService.isInit.pipe(
       filter((value) => !!value),
       withLatestFrom(
-        this.appStore.select(fromRootSelectors.selectIsAuthenticated),
-        this.appStore.select(fromRootSelectors.selectCurrentUser)
+        this.appStore.select(fromRootSelectors.selectIsAuthenticated)
       ),
-      map(([_, isAuthenticated, user]) => {
+      switchMap(([_, isAuthenticated]) => {
         const token = this.userService.user?.token;
 
         if (isAuthenticated && token) {
-          return true;
+          return of(true);
         }
 
         if (!isAuthenticated && token) {
           return this.authService.getCurrentUser().pipe(
-            tap((user) => {
+            map((user) => {
               this.appStore.dispatch(fromRootActions.setCurrentUser(user));
 
               return true;
@@ -65,11 +65,11 @@ export class AuthGuard implements CanActivate {
               return throwError(() => error);
             })
           );
-        } else {
-          this.unauthorizedUtilService.redirectToLogin();
-
-          return false;
         }
+
+        this.unauthorizedUtilService.redirectToLogin();
+
+        return of(false);
       })
     );
   }

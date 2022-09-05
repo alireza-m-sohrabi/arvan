@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ContentChild,
   ElementRef,
@@ -7,7 +8,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { filter, map, Observable } from 'rxjs';
+import { filter, map, Observable, startWith } from 'rxjs';
+import { InputDirective } from './input.directive';
 import { LabelComponent } from './label/label.component';
 
 @Component({
@@ -19,36 +21,47 @@ import { LabelComponent } from './label/label.component';
 export class FormFieldComponent implements OnInit {
   @Input() control?: AbstractControl;
 
-  @ContentChild(LabelComponent, { read: ElementRef<HTMLElement> })
+  @ContentChild(LabelComponent, { read: ElementRef<HTMLElement>, static: true })
   label?: ElementRef<HTMLElement>;
 
-  errors$?: Observable<ValidationErrors | null>;
+  @ContentChild(InputDirective, { read: ElementRef, static: true })
+  inputElement?: ElementRef<any>;
 
-  @ContentChild(HTMLInputElement) inputElement?: ElementRef<HTMLInputElement>;
+  showErrors!: boolean;
 
-  constructor() {}
+  constructor(private cd: ChangeDetectorRef) {
+    this.showErrors = false;
+  }
 
   ngOnInit(): void {
-    this.errors$ = this.connectFormStatus();
+    this.connectFormStatus();
   }
 
   connectFormStatus() {
+    this.inputElement?.nativeElement.addEventListener('blur', () => {
+      this.check();
+    });
+
     if (this.control) {
-      return this.control!.statusChanges.pipe(
-        map((status) => {
-          if (status === 'INVALID') {
-            this.label?.nativeElement.classList.add('text-danger');
-
-            return this.control!.errors;
-          } else {
-            this.label?.nativeElement.classList.remove('text-danger');
-          }
-
+      this.control!.statusChanges.pipe(
+        startWith(this.control.status),
+        map(() => {
+          this.check();
           return [];
         })
-      );
+      ).subscribe();
+    }
+  }
+
+  private check() {
+    this.showErrors = !!this.control?.invalid && !!this.control?.touched;
+
+    if (this.showErrors) {
+      this.label?.nativeElement.classList.add('text-danger');
+    } else {
+      this.label?.nativeElement.classList.remove('text-danger');
     }
 
-    return undefined;
+    this.cd.detectChanges();
   }
 }

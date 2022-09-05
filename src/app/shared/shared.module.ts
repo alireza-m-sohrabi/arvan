@@ -8,6 +8,7 @@ import { LabelComponent } from './form-field/label/label.component';
 import { ButtonLoadingDirective } from './directives/button-loading.directive';
 import { ButtonSpinnerComponent } from './button-spinner/button-spinner.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { InputDirective } from './form-field/input.directive';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     ButtonLoadingDirective,
     ButtonSpinnerComponent,
     PaginationComponent,
+    InputDirective,
   ],
   imports: [CommonModule, NgxBootstrapModule, ReactiveFormsModule],
   exports: [
@@ -29,6 +31,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     ButtonLoadingDirective,
     ButtonSpinnerComponent,
     PaginationComponent,
+    InputDirective,
   ],
 })
 export class SharedModule {}

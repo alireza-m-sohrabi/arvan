@@ -1,4 +1,4 @@
 <div class="form-group">
   <ng-content></ng-content>
-  <arvan-error [errors]="errors$ | async"></arvan-error>
+  <arvan-error *ngIf="showErrors" [errors]="control?.errors"></arvan-error>
 </div>

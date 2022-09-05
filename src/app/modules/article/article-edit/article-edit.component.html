@@ -4,6 +4,7 @@
       <arvan-form-field [control]="form.controls['title']">
         <arvan-label for="articleTitle">Title</arvan-label>
         <input
+          arvanInput
           type="text"
           formControlName="title"
           class="form-control"
@@ -15,6 +16,7 @@
       <arvan-form-field [control]="form.controls['description']">
         <arvan-label for="articleDescription">Description</arvan-label>
         <input
+          arvanInput
           type="text"
           formControlName="description"
           class="form-control"
@@ -26,6 +28,7 @@
       <arvan-form-field [control]="form.controls['body']">
         <arvan-label for="articleBody">Body</arvan-label>
         <textarea
+          arvanInput
           type="text"
           formControlName="body"
           class="form-control"

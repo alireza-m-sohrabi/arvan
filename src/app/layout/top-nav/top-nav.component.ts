@@ -12,13 +12,13 @@ import { map, Observable } from 'rxjs';
 export class TopNavComponent implements OnInit {
   username$!: Observable<string>;
 
-  constructor(private appStore: Store<fromRoot.AppState>) {}
-
-  ngOnInit(): void {
+  constructor(private appStore: Store<fromRoot.AppState>) {
     this.username$ = this.appStore
       .select(fromRoot.selectCurrentUser)
       .pipe(map((user) => user?.username || ''));
   }
+
+  ngOnInit(): void {}
 
   logout() {
     this.appStore.dispatch(fromRoot.logoutUser());
