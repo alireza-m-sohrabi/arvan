@@ -11,10 +11,26 @@ const routes: Routes = [
     component: ArticleComponent,
     canActivate: [ArticleGuard],
     children: [
-      { path: '', component: ArticleListComponent },
-      { path: './page/:page', component: ArticleListComponent },
-      { path: 'create', component: ArticleEditComponent },
-      { path: 'edit/:slug', component: ArticleEditComponent },
+      {
+        path: '',
+        component: ArticleListComponent,
+        data: { title: 'All Posts' },
+      },
+      {
+        path: './page/:page',
+        component: ArticleListComponent,
+        data: { title: 'All Posts' },
+      },
+      {
+        path: 'create',
+        component: ArticleEditComponent,
+        data: { title: 'New Article' },
+      },
+      {
+        path: 'edit/:slug',
+        component: ArticleEditComponent,
+        data: { title: 'Edit Article' },
+      },
     ],
   },
 ];
