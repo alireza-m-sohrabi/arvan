@@ -1,5 +1,5 @@
 <div>
-  <div class="content-title">TITLE</div>
+  <div class="content-title">{{ titleService.currentTitle | async }}</div>
   <div class="content-main">
     <router-outlet></router-outlet>
   </div>

@@ -6,6 +6,7 @@
         <arvan-form-field [control]="form.controls['username']">
           <arvan-label for="registerUser">User</arvan-label>
           <input
+            arvanInput
             type="text"
             formControlName="username"
             class="form-control"
@@ -17,6 +18,7 @@
         <arvan-form-field [control]="form.controls['email']">
           <arvan-label for="registerEmail">Email</arvan-label>
           <input
+            arvanInput
             type="email"
             formControlName="email"
             class="form-control"
@@ -28,6 +30,7 @@
         <arvan-form-field [control]="form.controls['password']">
           <arvan-label for="registerPassword">Password</arvan-label>
           <input
+            arvanInput
             formControlName="password"
             type="password"
             class="form-control"

@@ -13,6 +13,7 @@ import { globalErrorHandlerProvider } from './error/global-error-handler';
 import { ErrorService } from './error/error.service';
 import { ConfirmationDialogService } from './confirmation/confirmation-dialog.service';
 import { ConfirmationDialogComponent } from './confirmation/confirmation-dialog.component';
+import { TitleService } from './title/title.service';
 
 @NgModule({
   declarations: [LoadingComponent, ConfirmationDialogComponent],
@@ -28,6 +29,7 @@ import { ConfirmationDialogComponent } from './confirmation/confirmation-dialog.
     authInterceptorProvider,
     globalErrorHandlerProvider,
     ConfirmationDialogService,
+    TitleService,
   ],
   exports: [LoadingComponent],
 })

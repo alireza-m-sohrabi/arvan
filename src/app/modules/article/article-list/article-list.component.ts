@@ -54,6 +54,12 @@ export class ArticleListComponent implements OnInit {
       });
   }
 
+  onPageChange(pagination: Pagination) {
+    this.articleStore.dispatch(
+      fromArticle.setArticleFilters({ filters: { pagination } })
+    );
+  }
+
   private connectState() {
     this.articles$ = this.articleStore.select(fromArticle.selectArticles).pipe(
       map((articles) => {

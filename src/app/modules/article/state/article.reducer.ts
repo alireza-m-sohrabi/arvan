@@ -12,7 +12,7 @@ const articleInitialState: ArticleState = {
   error: undefined,
   filters: {
     pagination: {
-      limit: 20,
+      limit: 5,
       offset: 0,
       pageNumber: 1,
       total: 0,
@@ -31,7 +31,7 @@ export const articleReducer = createReducer(
     articles: items,
     filters: {
       ...state.filters,
-      total,
+      total: 13,
     },
   })),
 

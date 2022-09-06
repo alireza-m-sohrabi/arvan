@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { TitleService } from 'arvan/core/title/title.service';
 
 @Component({
   selector: 'arvan-content',
@@ -7,7 +8,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContentComponent implements OnInit {
-  constructor() {}
+  constructor(public titleService: TitleService) {}
 
   ngOnInit(): void {}
 }
